@@ -4,7 +4,7 @@ import List
 
 -- Current Project Euler max-project-number
 max_problem_num :: Integer
-max_problem_num = 5
+max_problem_num = 6
 
 -- Problem 1 - Add all the natural numbers below one thousand that are multiples of 3 or 5.
 problem1 :: Integer
@@ -26,7 +26,7 @@ digitArray n arr
 isMirror :: [Integer] -> Bool
 isMirror arr
 	| (length(arr) == 0) || (length(arr) == 1) = True
-	| head(arr) == head(reverse(arr)) = isMirror (drop 1 (reverse (drop 1 arr)))
+	| head(arr) == last(arr) = isMirror (drop 1 (reverse (drop 1 arr)))
 	| otherwise = False
 
 isPalindrome :: Integer -> Bool
@@ -41,14 +41,22 @@ largest_palindrome = head( filter isPalindrome (reverse (sort productOfAllThreeD
 smallest_divisible_number :: Integer
 smallest_divisible_number = foldl lcm 1 [1..20]
 
+-- Problem 6 -- Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum
+sq :: Integer -> Integer
+sq x = x * x
+
+sumsq_diff :: Integer
+sumsq_diff = abs ((sq (sum [1..100])) - (sum (map sq [1..100])))
+
 -- Add new problems to this list as they are created
 eulerEval :: Integer -> Integer
 eulerEval 1 = problem1
 eulerEval 2 = problem2
 eulerEval 4 = largest_palindrome
 eulerEval 5 = smallest_divisible_number
+eulerEval 6 = sumsq_diff 
 eulerEval _ = 0
 
--- | main, do Nothing
+-- | main, print out all known solutions
 main :: IO()
 main = mapM_ print (map eulerEval [1 .. max_problem_num])
