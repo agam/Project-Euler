@@ -4,7 +4,7 @@ import List
 
 -- Current Project Euler max-project-number
 max_problem_num :: Integer
-max_problem_num = 4
+max_problem_num = 5
 
 -- Problem 1 - Add all the natural numbers below one thousand that are multiples of 3 or 5.
 problem1 :: Integer
@@ -37,11 +37,16 @@ largest_palindrome = head( filter isPalindrome (reverse (sort productOfAllThreeD
 	where
 	productOfAllThreeDigitNumbers = [ x * y | x <- [999, 998 .. 100], y <- [999, 998 .. 100]]
 
+-- Problem 5 -- What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20 ?
+smallest_divisible_number :: Integer
+smallest_divisible_number = foldl lcm 1 [1..20]
+
 -- Add new problems to this list as they are created
 eulerEval :: Integer -> Integer
 eulerEval 1 = problem1
 eulerEval 2 = problem2
 eulerEval 4 = largest_palindrome
+eulerEval 5 = smallest_divisible_number
 eulerEval _ = 0
 
 -- | main, do Nothing
