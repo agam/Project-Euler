@@ -4,7 +4,7 @@ import List
 
 -- Current Project Euler max-project-number
 max_problem_num :: Integer
-max_problem_num = 6
+max_problem_num = 7
 
 -- Problem 1 - Add all the natural numbers below one thousand that are multiples of 3 or 5.
 problem1 :: Integer
@@ -48,6 +48,15 @@ sq x = x * x
 sumsq_diff :: Integer
 sumsq_diff = abs ((sq (sum [1..100])) - (sum (map sq [1..100])))
 
+-- Problem 7 -- What is the 10001^(st) prime number ?
+filter_primes :: Integer -> [Integer] -> [Integer] -> [Integer]
+filter_primes _ _ [] = error "ran out of integers!"
+filter_primes 0 currentlist _ = currentlist
+filter_primes count currentlist (x:xs) = filter_primes (count-1) (x:currentlist) (filter (\n -> n `mod` x /= 0) xs)
+
+prime_1001 :: Integer
+prime_1001 = head(filter_primes 1001 [] [2..])
+
 -- Add new problems to this list as they are created
 eulerEval :: Integer -> Integer
 eulerEval 1 = problem1
@@ -55,6 +64,7 @@ eulerEval 2 = problem2
 eulerEval 4 = largest_palindrome
 eulerEval 5 = smallest_divisible_number
 eulerEval 6 = sumsq_diff 
+eulerEval 7 = prime_1001
 eulerEval _ = 0
 
 -- | main, print out all known solutions
