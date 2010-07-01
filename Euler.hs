@@ -4,7 +4,7 @@ import List
 
 -- Current Project Euler max-project-number
 max_problem_num :: Integer
-max_problem_num = 8
+max_problem_num = 9
 
 -- Problem 1 - Add all the natural numbers below one thousand that are multiples of 3 or 5.
 problem1 :: Integer
@@ -71,6 +71,19 @@ big1000num = 7316717653133062491922511967442657474235534919493496983520312774506
 digitProduct :: Integer
 digitProduct = maxArrayProduct (digitArray big1000num [])
 
+-- Problem 9 -- There exists exactly one Pythagorean triplet for which a + b + c = 1000. Find the product abc.
+allPythTriplets :: [(Integer, Integer, Integer)]
+allPythTriplets = [(x^2 - y^2,2*x*y,x^2 + y^2) | x <- [1 ..], y<-[1..(x-1)]]
+
+findPythTriplet :: Integer
+findPythTriplet = let
+	triplet_product::(Integer, Integer, Integer) -> Integer
+	triplet_product (a,b,c) = a*b*c
+	triplet_sum :: (Integer, Integer, Integer) -> Integer
+	triplet_sum (a,b,c) = a + b + c
+	in
+	triplet_product (head( filter (\x -> ((triplet_sum x) == 1000)) allPythTriplets))
+
 -- Add new problems to this list as they are created
 eulerEval :: Integer -> Integer
 eulerEval 1 = problem1
@@ -80,6 +93,7 @@ eulerEval 5 = smallest_divisible_number
 eulerEval 6 = sumsq_diff 
 eulerEval 7 = prime_10001
 eulerEval 8 = digitProduct
+eulerEval 9 = findPythTriplet
 eulerEval _ = 0
 
 -- | main, print out all known solutions
