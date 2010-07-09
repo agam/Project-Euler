@@ -73,7 +73,7 @@ digitProduct = maxArrayProduct (digitArray big1000num [])
 
 -- Problem 9 -- There exists exactly one Pythagorean triplet for which a + b + c = 1000. Find the product abc.
 allPythTriplets :: [(Integer, Integer, Integer)]
-allPythTriplets = [(x^2 - y^2,2*x*y,x^2 + y^2) | x <- [1 ..], y<-[1..(x-1)]]
+allPythTriplets = [(x*x - y*y,2*x*y,x*x + y*y) | x <- [1 ..], y<-[1..(x-1)]]
 
 findPythTriplet :: Integer
 findPythTriplet = let
