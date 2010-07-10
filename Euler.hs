@@ -4,7 +4,7 @@ import List
 
 -- Current Project Euler max-project-number
 max_problem_num :: Integer
-max_problem_num = 11
+max_problem_num = 12
 
 -- Problem 1 - Add all the natural numbers below one thousand that are multiples of 3 or 5.
 problem1 :: Integer
@@ -145,8 +145,42 @@ largest_mat_element mat = maximum (map maximum mat)
 four_num_prod :: Integer
 four_num_prod = largest_mat_element (get_all_prod four_num_mat)
 
+-- Problem 12 -- Find the smallest triangle number with more than 500 divisors
+triangle_numbers :: [Integer]
+triangle_numbers = scanl (+) 1 [2..]
+
+filter_primes_helper :: [Integer] -> Integer -> [Integer] -> [Integer]
+filter_primes_helper primes _ [] = primes
+filter_primes_helper primes prod (number:numbers)
+	| (gcd number prod) > 1 = filter_primes_helper primes prod numbers
+	| (gcd number prod) == 1 = filter_primes_helper (primes ++ [number]) (prod * number) numbers
+	| otherwise = error "Impossibe !"
+
+filter_prime_nums :: Integer -> [Integer]
+filter_prime_nums num = filter_primes_helper [] 1 [2 .. num]
+
+prime_factors_helper :: Integer -> Integer -> Integer
+prime_factors_helper factor number 
+	| number `rem` factor == 0 = 1 + prime_factors_helper factor (number / factor)
+	| otherwise = 0
+
+prime_factors :: [Integer] -> Integer -> [Integer]
+prime_factors [] _ = error "Ran out of primes !"
+prime_factors _ 1 = []
+prime_factors (factor:factors) number = 
+	let power = prime_factors_helper factor number in
+	power:(prime_factors factors (number / (factor ^ power)))
+
+num_divisors :: Integer -> Integer
+num_divisors num =
+	let primes = filter_prime_nums (floor (num / 2)) in
+	1 + product (filter (>0) (prime_factors primes num))
+
+triangle_divisors :: Integer
+triangle_divisors = filter (\x -> snd(x)> 500) (zip triangle_numbers (map num_divisors triangle_numbers))
+
 -- Add new problems to this list as they are created
-eulerEval :: Integer -> Integer
+eulerEval :: Int -> Integer
 eulerEval 1 = problem1
 eulerEval 2 = problem2
 eulerEval 4 = largest_palindrome
@@ -157,6 +191,7 @@ eulerEval 8 = digitProduct
 eulerEval 9 = findPythTriplet
 eulerEval 10 = prime_sum
 eulerEval 11 = four_num_prod
+eulerEval 12 = triangle_divisors
 eulerEval _ = 0
 
 -- | main, print out all known solutions
