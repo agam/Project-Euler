@@ -4,7 +4,7 @@ import List
 
 -- Current Project Euler max-project-number
 max_problem_num :: Integer
-max_problem_num = 9
+max_problem_num = 10 
 
 -- Problem 1 - Add all the natural numbers below one thousand that are multiples of 3 or 5.
 problem1 :: Integer
@@ -84,6 +84,18 @@ findPythTriplet = let
 	in
 	triplet_product (head( filter (\x -> ((triplet_sum x) == 1000)) allPythTriplets))
 
+-- Problem 10 -- Find the sum of all the primes below two million
+-- TODO(agam): Scope for refactoring with problem 7 here. Also, this is extremely brute force and takes around 15 mins (!)
+sum_primes :: Integer -> Integer-> [Integer] -> Integer
+sum_primes runningsum _ [] = runningsum
+sum_primes runningsum prod (number:numbers)
+	| (gcd number prod) > 1 = sum_primes runningsum prod numbers
+	| (gcd number prod) == 1 = sum_primes (runningsum + number) (prod * number) numbers
+	| otherwise = error "Impossible !"
+
+prime_sum :: Integer
+prime_sum = sum_primes 0 1 [2..2000000]
+
 -- Add new problems to this list as they are created
 eulerEval :: Integer -> Integer
 eulerEval 1 = problem1
@@ -94,6 +106,7 @@ eulerEval 6 = sumsq_diff
 eulerEval 7 = prime_10001
 eulerEval 8 = digitProduct
 eulerEval 9 = findPythTriplet
+eulerEval 10 = prime_sum
 eulerEval _ = 0
 
 -- | main, print out all known solutions
