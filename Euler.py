@@ -4,6 +4,7 @@ import getopt
 import sys
 
 def NumberOfDivisors(n):
+    """Return the number of divisors for a given number"""
     if n <= 1:
         return 1
     limit = n
@@ -23,6 +24,7 @@ def TriangleNumber(n):
     return n * (n + 1) / 2
 
 def solve12():
+    """Find the first triangle number to have more than 500 divisors"""
     n = 1
     maxdivs = 1
     maxn = 1
