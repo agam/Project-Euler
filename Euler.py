@@ -40,9 +40,21 @@ def solve12():
         n = n + 1
     print("Found %d with %d" % (TriangleNumber(n), numdivs))
 
+def solve13():
+    """Find the first 10 digits of the sum of one hundred 50-digit numbers.
+       Data is stored in data/problem13.
+       [Use the fact that python automatically handles large numbers --
+       see http://www.python.org/dev/peps/pep-0237/]"""
+    sum = 0
+    f = open('data/problem13', 'r')
+    for line in f:
+        val = int(line.strip())
+        sum += val
+    print("sum is %d" % sum)
 
 euler_problems = {
         12: solve12,
+        13: solve13,
         }
 
 def main():
