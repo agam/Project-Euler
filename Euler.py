@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import getopt
-import numpy
+import numpy as np
 import sys
 
 def NumberOfDivisors(n):
@@ -69,7 +69,7 @@ def solve14():
     longest_sequence = (1, 1)
     # Memoize the first 100,000 numbers
     memo_limit = 100000
-    memoized_lengths = numpy.zeros(100000)
+    memoized_lengths = np.zeros(100000)
     for num in xrange(2, 1000000):
         length = get_hotpo_length(num, memoized_lengths)
         #print("Length is %d" % length)
@@ -82,11 +82,24 @@ def solve14():
     print("Finally, longest sequence was : %d for %d" %
             (longest_sequence[0], longest_sequence[1]))
 
+def factorial(num):
+    if num == 1:
+        return 1
+    else:
+        return num * factorial(num-1)
+
+def solve15():
+    """Find the number of ways to traverse a 20x20 grid across a diagonal"""
+    # 2N C N is the number of ways to select a path across the diagonal (here N = 20)
+
+    result = factorial(40) / factorial(20) / factorial(20)
+    print("The answer is: %d" % result)
 
 euler_problems = {
         12: solve12,
         13: solve13,
         14: solve14,
+        15: solve15,
         }
 
 def main():
