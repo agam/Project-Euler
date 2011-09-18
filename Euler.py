@@ -95,11 +95,25 @@ def solve15():
     result = factorial(40) / factorial(20) / factorial(20)
     print("The answer is: %d" % result)
 
+def sum_of_digits(num):
+    sum = 0
+    while num > 0:
+        sum += (num % 10)
+        num = num / 10
+    return sum
+
+def solve16():
+    """Find the sum of  the digits in 2 ^ 1000"""
+    two_to_thousand = 2**1000
+    result = sum_of_digits(two_to_thousand)
+    print("The answer is: %d" % result)
+
 euler_problems = {
         12: solve12,
         13: solve13,
         14: solve14,
         15: solve15,
+        16: solve16,
         }
 
 def main():
