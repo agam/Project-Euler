@@ -2,6 +2,7 @@
 
 import getopt
 import numpy as np
+import re
 import sys
 
 def NumberOfDivisors(n):
@@ -108,12 +109,51 @@ def solve16():
     result = sum_of_digits(two_to_thousand)
     print("The answer is: %d" % result)
 
+def solve17():
+    """Find the number of words used in writing out all numbers from 1 to 1000"""
+    one_len = len("one")
+    digits = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" ]
+    tens = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"] # all except ten
+    teens = ["", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+
+    all_numbers = []
+    # Start with the single digits
+    for hundred in range(10):
+        hundred_prefix = ""
+        if hundred > 0:
+            all_numbers.append(digits[hundred] + " hundred ")
+            hundred_prefix = digits[hundred] + " hundred and "
+        for ten in range(10):
+            if ten > 0:
+                all_numbers.append(hundred_prefix + tens[ten])
+            ten_prefix = ""
+            if ten > 1:
+                ten_prefix = tens[ten] + " "
+            for digit in range(1, 10):
+                if ten == 0:
+                    all_numbers.append(hundred_prefix + digits[digit])
+                elif ten == 1:
+                    all_numbers.append(hundred_prefix + teens[digit])
+                else:
+                    all_numbers.append(hundred_prefix + ten_prefix + digits[digit])
+    all_numbers.append("one thousand")
+
+    # Print them all out, while adding them up
+    result = 0
+    for number in all_numbers:
+        # print(number)     ## Uncomment this for debug
+        tempstring = re.sub(r' ', '', number)
+        result = result + len(tempstring)
+    print("\n\nThe answer is: %d" % result)
+
+
 euler_problems = {
         12: solve12,
         13: solve13,
         14: solve14,
         15: solve15,
         16: solve16,
+        17: solve17,
         }
 
 def main():
