@@ -14,6 +14,12 @@ var problemNumber = flag.Int(
 var dataFile = flag.String(
 	"datafile", "", "Data file used to solve the problem")
 
+
+// Sample run:
+//
+// <built-program> --problem=18 --datafile=<path-to-repo>/data/problem18
+
+
 func solve18() {
 	fd, err := os.Open(*dataFile)
 	if err != nil {
