@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"time"
 )
 
 var problemNumber = flag.Int(
@@ -14,11 +15,9 @@ var problemNumber = flag.Int(
 var dataFile = flag.String(
 	"datafile", "", "Data file used to solve the problem")
 
-
 // Sample run:
 //
 // <built-program> --problem=18 --datafile=<path-to-repo>/data/problem18
-
 
 func solve18() {
 	fd, err := os.Open(*dataFile)
@@ -72,11 +71,35 @@ func solve18() {
 	fmt.Printf("The answer is [%d]\n", numbers[0][0])
 }
 
+func solve19() {
+	// Go through all the first of the months and count the sundays
+	sundayCount := 0
+	month := time.January
+	year := 1901
+	for year < 2001 {
+		day := time.Date(year, month, 1, 0, 0, 0, 0, time.UTC)
+		if day.Weekday() == time.Sunday {
+			sundayCount++
+		}
+		if month == time.December {
+			month = time.January
+			year++
+		} else {
+			month++
+		}
+	}
+	fmt.Printf("The answer is [%d]\n", sundayCount)
+}
+
 func main() {
 	flag.Parse()
 	fmt.Printf("Solving problem %d\n", *problemNumber)
 	switch *problemNumber {
 	case 18:
 		solve18()
+		return
+	case 19:
+		solve19()
+		return
 	}
 }
