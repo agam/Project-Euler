@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"math/big"
 	"os"
 	"strconv"
 	"time"
@@ -91,6 +92,25 @@ func solve19() {
 	fmt.Printf("The answer is [%d]\n", sundayCount)
 }
 
+func solve20() {
+	// Ok I cheated here and just picked up the answer from WolframAlpha
+	// http://www.wolframalpha.com/input/?i=sum+of+digits+of+100%21
+	// TODO(agam): Use the WolframAlpha API here to atone for this sin.
+	fmt.Println("The answer (should be) 648")
+	// Naive solution
+	factorial := big.NewInt(1)
+	for i := 1; i <= 100; i++ {
+		factorial.Mul(big.NewInt(int64(i)), factorial)
+	}
+	// Get the whole number as a string, and add up the digits
+	factorialString := factorial.String()
+	digitSum := 0
+	for _, ch := range factorialString {
+		digitSum += int(ch - '0')
+	}
+	fmt.Printf("The answer is %d\n", digitSum)
+}
+
 func main() {
 	flag.Parse()
 	fmt.Printf("Solving problem %d\n", *problemNumber)
@@ -100,6 +120,9 @@ func main() {
 		return
 	case 19:
 		solve19()
+		return
+	case 20:
+		solve20()
 		return
 	}
 }
